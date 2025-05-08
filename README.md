@@ -1,66 +1,147 @@
-# Welcome to your project
+# Automating CI/CD Pipelines using Jenkins and Docker for Seamless Deployments
 
+This project demonstrates how to set up a fully automated CI/CD pipeline using Jenkins and Docker. The pipeline automates code build, test, and deployment processes to streamline software delivery.
 
-## Project 
+## Features
 
-## How can I edit this code?
+- **Automated Builds** triggered by code changes (e.g., GitHub Webhooks)
+- **Dockerized Jenkins** for easy setup and portability
+- **Docker Images** for application and Jenkins agents
+- **Deployment Automation** to staging or production environments
+- **Pipeline-as-Code** using Jenkinsfile
+- **Scalable Architecture** with Docker Compose (optional)
 
-There are several ways of editing your application.
+## Prerequisites
 
-Changes made via Lovable will be committed automatically to this repo.
+- Docker & Docker Compose
+- Git
+- Basic knowledge of Jenkins Pipelines and Docker
 
-**Use your preferred IDE**
+## Project Structure
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+```bash
+.
+├── Jenkinsfile               # Declarative pipeline definition
+├── docker-compose.yml        # Multi-container setup for Jenkins and the app
+├── jenkins/
+│   └── Dockerfile            # Custom Jenkins image
+├── app/
+│   ├── Dockerfile            # Dockerfile for your application
+│   └── (source code)         # Application source code
+└── README.md
+Getting Started
+1. Clone the Repository
+bash
+Copy
+Edit
+git clone https://github.com/your-username/ci-cd-jenkins-docker.git
+cd ci-cd-jenkins-docker
+2. Start Jenkins and Application Containers
+bash
+Copy
+Edit
+docker-compose up -d
+3. Access Jenkins
+Visit http://localhost:8080 and follow the setup wizard.
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+To get the admin password:
 
-Follow these steps:
+bash
+Copy
+Edit
+docker exec jenkins cat /var/jenkins_home/secrets/initialAdminPassword
+4. Configure Your Pipeline
+Install required plugins (Pipeline, Git, Docker, etc.)
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+Create a new pipeline project
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+Point Jenkins to this repository and use the Jenkinsfile
 
-# Step 3: Install the necessary dependencies.
-npm i
+Jenkinsfile Overview
+Stages: Checkout → Build → Test → Dockerize → Deploy
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
-```
+Post Actions: Notifications, Cleanup
 
-**Edit a file directly in GitHub**
+Customization
+Modify Jenkinsfile to match your build/test/deploy logic
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+Use environment-specific Docker Compose files if needed
 
-**Use GitHub Codespaces**
+License
+This project is licensed under the MIT License.
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+Author
+[Your Name] – [Sakthimurugan# Automating CI/CD Pipelines using Jenkins and Docker for Seamless Deployments
 
-## What technologies are used for this project?
+This project demonstrates how to set up a fully automated CI/CD pipeline using Jenkins and Docker. The pipeline automates code build, test, and deployment processes to streamline software delivery.
 
-This project is built with:
+## Features
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+- **Automated Builds** triggered by code changes (e.g., GitHub Webhooks)
+- **Dockerized Jenkins** for easy setup and portability
+- **Docker Images** for application and Jenkins agents
+- **Deployment Automation** to staging or production environments
+- **Pipeline-as-Code** using Jenkinsfile
+- **Scalable Architecture** with Docker Compose (optional)
 
-## How can I deploy this project?
+## Prerequisites
 
+- Docker & Docker Compose
+- Git
+- Basic knowledge of Jenkins Pipelines and Docker
 
+## Project Structure
 
-## Can I connect a custom domain to my Lovable project?
+```bash
+.
+├── Jenkinsfile               # Declarative pipeline definition
+├── docker-compose.yml        # Multi-container setup for Jenkins and the app
+├── jenkins/
+│   └── Dockerfile            # Custom Jenkins image
+├── app/
+│   ├── Dockerfile            # Dockerfile for your application
+│   └── (source code)         # Application source code
+└── README.md
+Getting Started
+1. Clone the Repository
+bash
+Copy
+Edit
+git clone https://github.com/your-username/ci-cd-jenkins-docker.git
+cd ci-cd-jenkins-docker
+2. Start Jenkins and Application Containers
+bash
+Copy
+Edit
+docker-compose up -d
+3. Access Jenkins
+Visit http://localhost:8080 and follow the setup wizard.
 
-Yes, you can!
+To get the admin password:
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain
+bash
+Copy
+Edit
+docker exec jenkins cat /var/jenkins_home/secrets/initialAdminPassword
+4. Configure Your Pipeline
+Install required plugins (Pipeline, Git, Docker, etc.)
+
+Create a new pipeline project
+
+Point Jenkins to this repository and use the Jenkinsfile
+
+Jenkinsfile Overview
+Stages: Checkout → Build → Test → Dockerize → Deploy
+
+Post Actions: Notifications, Cleanup
+
+Customization
+Modify Jenkinsfile to match your build/test/deploy logic
+
+Use environment-specific Docker Compose files if needed
+
+License
+This project is licensed under the MIT License.
+
+Author
+[Sakthimurugan.V] – [sakthimurugan2501@gmail.com]
