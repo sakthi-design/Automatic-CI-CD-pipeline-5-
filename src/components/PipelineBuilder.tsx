@@ -4,6 +4,8 @@ import { Button } from "@/components/ui/button";
 import { Code, Package, Server, Settings } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 
 interface PipelineStep {
   id: string;
@@ -15,6 +17,7 @@ interface PipelineStep {
 
 const PipelineBuilder = () => {
   const [activeStep, setActiveStep] = useState<string | null>(null);
+  const [pipelineName, setPipelineName] = useState("Production Deployment");
   const [steps, setSteps] = useState<PipelineStep[]>([
     { 
       id: '1', 
@@ -38,6 +41,39 @@ const PipelineBuilder = () => {
       command: 'jenkins-cli deploy --env=staging --version=$VERSION'
     }
   ]);
+
+  // For editing active step
+  const [activeStepName, setActiveStepName] = useState("");
+  const [activeStepCommand, setActiveStepCommand] = useState("");
+
+  // Update form fields when a new step is selected
+  const handleStepSelect = (stepId: string) => {
+    setActiveStep(stepId);
+    const selectedStep = steps.find(s => s.id === stepId);
+    if (selectedStep) {
+      setActiveStepName(selectedStep.name);
+      setActiveStepCommand(selectedStep.command);
+    }
+  };
+
+  // Save changes to the active step
+  const handleSaveStep = () => {
+    if (activeStep) {
+      setSteps(prev => prev.map(step => 
+        step.id === activeStep 
+          ? { ...step, name: activeStepName, command: activeStepCommand } 
+          : step
+      ));
+    }
+  };
+
+  // Delete the active step
+  const handleDeleteStep = () => {
+    if (activeStep) {
+      setSteps(prev => prev.filter(step => step.id !== activeStep));
+      setActiveStep(null);
+    }
+  };
 
   const getStepIcon = (type: string) => {
     switch(type) {
@@ -83,7 +119,7 @@ const PipelineBuilder = () => {
                     <div 
                       key={step.id}
                       className={`pipeline-step ${activeStep === step.id ? 'border-blue' : ''}`}
-                      onClick={() => setActiveStep(step.id)}
+                      onClick={() => handleStepSelect(step.id)}
                     >
                       {step.status === 'running' ? (
                         <div className="running-indicator"></div>
@@ -129,9 +165,10 @@ const PipelineBuilder = () => {
                     <div className="space-y-4">
                       <div>
                         <label className="text-sm font-medium mb-1 block">Pipeline Name</label>
-                        <input
+                        <Input
                           type="text"
-                          value="Production Deployment"
+                          value={pipelineName}
+                          onChange={(e) => setPipelineName(e.target.value)}
                           className="w-full px-3 py-2 border rounded"
                         />
                       </div>
@@ -140,28 +177,28 @@ const PipelineBuilder = () => {
                         <div className="space-y-4 border-t border-border pt-4 mt-4">
                           <h4 className="font-medium">Step Configuration</h4>
                           
-                          {steps.find(s => s.id === activeStep)?.name && (
-                            <div>
-                              <label className="text-sm font-medium mb-1 block">Step Name</label>
-                              <input
-                                type="text"
-                                value={steps.find(s => s.id === activeStep)?.name}
-                                className="w-full px-3 py-2 border rounded"
-                              />
-                            </div>
-                          )}
+                          <div>
+                            <label className="text-sm font-medium mb-1 block">Step Name</label>
+                            <Input
+                              type="text"
+                              value={activeStepName}
+                              onChange={(e) => setActiveStepName(e.target.value)}
+                              className="w-full px-3 py-2 border rounded"
+                            />
+                          </div>
                           
                           <div>
                             <label className="text-sm font-medium mb-1 block">Command</label>
-                            <textarea
-                              value={steps.find(s => s.id === activeStep)?.command}
+                            <Textarea
+                              value={activeStepCommand}
+                              onChange={(e) => setActiveStepCommand(e.target.value)}
                               className="w-full px-3 py-2 border rounded min-h-[100px] font-mono text-sm"
-                            ></textarea>
+                            />
                           </div>
                           
                           <div className="flex gap-2">
-                            <Button size="sm" variant="outline">Save Changes</Button>
-                            <Button size="sm" variant="destructive">Delete Step</Button>
+                            <Button size="sm" variant="outline" onClick={handleSaveStep}>Save Changes</Button>
+                            <Button size="sm" variant="destructive" onClick={handleDeleteStep}>Delete Step</Button>
                           </div>
                         </div>
                       )}

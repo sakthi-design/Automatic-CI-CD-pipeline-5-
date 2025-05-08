@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import Navbar from "@/components/Navbar";
 import { Button } from "@/components/ui/button";
@@ -6,6 +5,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/hooks/use-toast";
 import { Package, Server, Code, Settings } from "lucide-react";
+import { Input } from "@/components/ui/input";
 
 interface Pipeline {
   id: string;
@@ -41,6 +41,20 @@ const Dashboard = () => {
       steps: 2
     }
   ]);
+  
+  // Form state for settings
+  const [jenkinsUrl, setJenkinsUrl] = useState("https://jenkins.example.com");
+  const [jenkinsToken, setJenkinsToken] = useState("");
+  const [jenkinsUsername, setJenkinsUsername] = useState("jenkins_user");
+  const [registryUrl, setRegistryUrl] = useState("docker.example.com");
+  const [registryType, setRegistryType] = useState("Docker Hub");
+  const [registryUsername, setRegistryUsername] = useState("docker_user");
+  const [registryPassword, setRegistryPassword] = useState("");
+  const [pipelineName, setPipelineName] = useState("Production Deployment");
+  
+  // Pipeline editing state
+  const [activeStepName, setActiveStepName] = useState("");
+  const [activeStepCommand, setActiveStepCommand] = useState("");
 
   const getStatusBadge = (status: string) => {
     switch(status) {
@@ -69,6 +83,27 @@ const Dashboard = () => {
     toast({
       title: "Pipeline triggered",
       description: "Your pipeline is now running.",
+    });
+  };
+  
+  const handleSaveJenkinsConfig = () => {
+    toast({
+      title: "Jenkins configuration saved",
+      description: "Your Jenkins settings have been updated.",
+    });
+  };
+  
+  const handleSaveDockerConfig = () => {
+    toast({
+      title: "Docker registry configuration saved",
+      description: "Your Docker registry settings have been updated.",
+    });
+  };
+  
+  const handleSaveStepChanges = () => {
+    toast({
+      title: "Step configuration saved",
+      description: "Your pipeline step has been updated.",
     });
   };
 
@@ -203,17 +238,19 @@ const Dashboard = () => {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div className="space-y-2">
                       <label className="text-sm font-medium">Jenkins URL</label>
-                      <input
+                      <Input
                         type="text"
-                        className="w-full px-3 py-2 border rounded"
+                        value={jenkinsUrl}
+                        onChange={(e) => setJenkinsUrl(e.target.value)}
                         placeholder="https://jenkins.example.com"
                       />
                     </div>
                     <div className="space-y-2">
                       <label className="text-sm font-medium">API Token</label>
-                      <input
+                      <Input
                         type="password"
-                        className="w-full px-3 py-2 border rounded"
+                        value={jenkinsToken}
+                        onChange={(e) => setJenkinsToken(e.target.value)}
                         placeholder="••••••••••••••••"
                       />
                     </div>
@@ -221,15 +258,16 @@ const Dashboard = () => {
                   
                   <div className="space-y-2">
                     <label className="text-sm font-medium">Username</label>
-                    <input
+                    <Input
                       type="text"
-                      className="w-full px-3 py-2 border rounded"
+                      value={jenkinsUsername}
+                      onChange={(e) => setJenkinsUsername(e.target.value)}
                       placeholder="jenkins_user"
                     />
                   </div>
                   
                   <div className="flex justify-end">
-                    <Button>Save Configuration</Button>
+                    <Button onClick={handleSaveJenkinsConfig}>Save Configuration</Button>
                   </div>
                 </CardContent>
               </Card>
@@ -243,15 +281,20 @@ const Dashboard = () => {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div className="space-y-2">
                       <label className="text-sm font-medium">Registry URL</label>
-                      <input
+                      <Input
                         type="text"
-                        className="w-full px-3 py-2 border rounded"
+                        value={registryUrl}
+                        onChange={(e) => setRegistryUrl(e.target.value)}
                         placeholder="docker.example.com"
                       />
                     </div>
                     <div className="space-y-2">
                       <label className="text-sm font-medium">Registry Type</label>
-                      <select className="w-full px-3 py-2 border rounded">
+                      <select 
+                        className="w-full px-3 py-2 border rounded"
+                        value={registryType}
+                        onChange={(e) => setRegistryType(e.target.value)}
+                      >
                         <option>Docker Hub</option>
                         <option>Amazon ECR</option>
                         <option>Google GCR</option>
@@ -264,24 +307,26 @@ const Dashboard = () => {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div className="space-y-2">
                       <label className="text-sm font-medium">Username</label>
-                      <input
+                      <Input
                         type="text"
-                        className="w-full px-3 py-2 border rounded"
+                        value={registryUsername}
+                        onChange={(e) => setRegistryUsername(e.target.value)}
                         placeholder="docker_user"
                       />
                     </div>
                     <div className="space-y-2">
                       <label className="text-sm font-medium">Password/Token</label>
-                      <input
+                      <Input
                         type="password"
-                        className="w-full px-3 py-2 border rounded"
+                        value={registryPassword}
+                        onChange={(e) => setRegistryPassword(e.target.value)}
                         placeholder="••••••••••••••••"
                       />
                     </div>
                   </div>
                   
                   <div className="flex justify-end">
-                    <Button>Save Configuration</Button>
+                    <Button onClick={handleSaveDockerConfig}>Save Configuration</Button>
                   </div>
                 </CardContent>
               </Card>

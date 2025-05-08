@@ -1,6 +1,6 @@
 
 import { Button } from "@/components/ui/button";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { Code, Settings } from "lucide-react";
 
 const Navbar = () => {
@@ -15,10 +15,10 @@ const Navbar = () => {
         </div>
         
         <nav className="hidden md:flex items-center space-x-8">
-          <a href="/features" className="text-slate hover:text-blue transition-colors">Features</a>
-          <a href="/pipelines" className="text-slate hover:text-blue transition-colors">Pipelines</a>
-          <a href="/documentation" className="text-slate hover:text-blue transition-colors">Documentation</a>
-          <a href="/pricing" className="text-slate hover:text-blue transition-colors">Pricing</a>
+          <Link to="/" className="text-slate hover:text-blue transition-colors">Features</Link>
+          <Link to="/dashboard" className="text-slate hover:text-blue transition-colors">Pipelines</Link>
+          <Link to="/" className="text-slate hover:text-blue transition-colors">Documentation</Link>
+          <Link to="/" className="text-slate hover:text-blue transition-colors">Pricing</Link>
         </nav>
         
         <div className="flex items-center space-x-4">
